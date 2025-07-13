@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨Генератор паролей Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input[type="number"], input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
+
+        input[type="number"] {
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 100px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background: #5649c0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .passwords {
+            margin-top: 2rem;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .password {
+            background: var(--light);
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .password:hover {
+            transform: translateX(5px);
+        }
+
+        .copy-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #009d7e;
+        }
+
+        .strength-meter {
+            height: 5px;
+            background: #eee;
+            border-radius: 5px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            background: #ff7675;
+            transition: width 0.5s;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                border-radius: 10px;
+            }
+
+            header {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔒 Генератор паролей</h1>
+            <p class="subtitle">Создавайте надёжные пароли за секунды</p>
+        </header>
+
+        <div class="content">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="length">Длина пароля:</label>
+                    <input type="number" id="length" name="length" min="6" value="12">
+                </div>
+
+                <div class="form-group">
+                    <label for="count">Количество паролей:</label>
+                    <input type="number" id="count" name="count" min="1" value="5">
+                </div>
+
+                <div class="form-group">
+                    <label>Дополнительные параметры:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="digits" name="digits" checked>
+                            <label for="digits">Цифры (0-9)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="special" name="special" checked>
+                            <label for="special">Спецсимволы (!@#)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">Сгенерировать пароли</button>
+            </form>
+
+            {% if passwords %}
+            <div class="passwords">
+                <h3>Ваши пароли:</h3>
+                {% for p in passwords %}
+                <div class="password">
+                    <span class="password-text">{{ p }}</span>
+                    <button class="copy-btn" onclick="copyToClipboard('{{ p }}')">Копировать</button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    alert('Пароль скопирован в буфер обмена!');
+                })
+                .catch(err => {
+                    console.error('Ошибка копирования: ', err);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const lengthInput = document.getElementById('length');
+            const strengthBar = document.createElement('div');
+            strengthBar.className = 'strength-bar';
+            const meter = document.createElement('div');
+            meter.className = 'strength-meter';
+            meter.appendChild(strengthBar);
+            lengthInput.parentNode.appendChild(meter);
+
+            lengthInput.addEventListener('input', () => {
+                const length = parseInt(lengthInput.value);
+                let strength = 0;
+
+                if (length >= 6) strength = 25;
+                if (length >= 8) strength = 50;
+                if (length >= 12) strength = 75;
+                if (length >= 16) strength = 100;
+
+                strengthBar.style.width = `${strength}%`;
+                strengthBar.style.background =
+                    strength < 50 ? '#ff7675' :
+                    strength < 75 ? '#fdcb6e' : '#00b894';
+            });
+        });
+    </script>
+</body>
+</html>
